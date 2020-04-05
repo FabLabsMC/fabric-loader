@@ -18,6 +18,7 @@ package net.fabricmc.loader.api.metadata;
 
 import com.google.gson.JsonElement;
 import net.fabricmc.loader.api.Version;
+import net.fabricmc.loader.builder.ModMetadataBuilderImpl;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -75,4 +76,59 @@ public interface ModMetadata {
 	 */
 	@Deprecated
 	JsonElement getCustomElement(String key);
+
+	static Builder builder() {
+		return new ModMetadataBuilderImpl();
+	}
+
+	interface Builder {
+
+		// Required Values
+
+		Builder type(String type);
+
+		Builder id(String id);
+
+		Builder version(Version version);
+
+		// Mod Dependencies
+
+		Builder dependencies(ModDependency... dependencies);
+
+		Builder dependencies(Iterable<ModDependency> dependencies);
+
+		// Mod Details
+
+		Builder name(String name);
+
+		Builder description(String description);
+
+		Builder authors(Person... people);
+
+		Builder authors(Iterable<Person> people);
+
+		Builder contributors(Person... people);
+
+		Builder contributors(Iterable<Person> people);
+
+		Builder contact(ContactInformation contactInformation);
+
+		Builder licenses(String... licenses);
+
+		Builder licenses(Iterable<String> licenses);
+
+		Builder iconPath(String path);
+
+		// TODO: Custom values?
+
+		// Entrypoints
+
+		Builder entrypoint(String key, String path);
+
+		Builder mixinConfigs(String... paths);
+
+		Builder mixinConfigs(Iterable<String> paths);
+
+		// TODO: Configuration of Access Wideners
+	}
 }
